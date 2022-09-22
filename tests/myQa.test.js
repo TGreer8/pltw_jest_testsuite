@@ -96,7 +96,13 @@ const createStudentUsernameInput = By.xpath("//div[@class='MuiFormControl-root M
 const createStudentPasswordInput = By.xpath("//input[@type='password']");
 const createStudentSubmitBtn = By.xpath("//span[normalize-space()='Submit']");
 
+// Announcment Selectors////
+const seeAllBtn = By.xpath("//a[normalize-space()='See All']");
+const summitBtn = By.xpath("//h5[contains(text(),'PLTW Summit (test) | 2018-19 Dates, Locations, and')]");
+const summitLink = By.xpath("//b[normalize-space()='PLTW Summit']");
 
+// PD Selectorts/////
+const pdBtn = By.xpath("//div[@class='modules__paddingLeftPdIcon___2bvlJ']//*[name()='svg']");
 
 
 
@@ -331,6 +337,58 @@ describe('Regression tests for myPLTW QA site', () => {
 
     });
 
+    test('announcments', async () => {
+        let driver = await new Builder().forBrowser("chrome").build();
+        driver.manage().window().maximize();
+        await driver.get('https://my-qa.pltw.org/login')
+        await driver.findElement(usernameInput).sendKeys("qa.taylor");
+        await driver.findElement(submitBtn).click();
+        await driver.wait(until.elementLocated(passwordInput), 30000);
+        await driver.findElement(passwordInput).sendKeys('Test123!');
+        await driver.wait(until.elementLocated(signinBtn), 30000);
+        await driver.findElement(signinBtn).click();
+        await driver.wait(until.elementLocated(seeAllBtn), 30000);
+        await driver.findElement(seeAllBtn).click();
+        await driver.wait(until.elementLocated(summitBtn), 30000);
+        await driver.findElement(summitBtn).click();
+        await driver.wait(until.elementLocated(summitLink), 30000);
+        const originalWindow = await driver.getWindowHandle();
+        await driver.findElement(summitLink).click();
+        await driver.sleep(5000);
+        await driver.switchTo().window(originalWindow);
+        await driver.sleep(5000);
+        await driver.quit();
+
+    });
+
+    test('professionalDevelopment', async () => {
+        let driver = await new Builder().forBrowser("chrome").build();
+        driver.manage().window().maximize();
+        await driver.get('https://my-qa.pltw.org/login')
+        await driver.findElement(usernameInput).sendKeys("qa.taylor");
+        await driver.findElement(submitBtn).click();
+        await driver.wait(until.elementLocated(passwordInput), 30000);
+        await driver.findElement(passwordInput).sendKeys('Test123!');
+        await driver.wait(until.elementLocated(signinBtn), 30000);
+        await driver.findElement(signinBtn).click();
+        await driver.wait(until.elementLocated(pdBtn), 30000);
+        await driver.findElement(pdBtn).click();
+        await driver.sleep(5000);
+        driver.navigate().back();
+        await driver.quit();
+
+    });
+
+        
+           
+
+        
+  
+    
+
+
+
+    
 
 
 
