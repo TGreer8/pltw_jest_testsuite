@@ -20,6 +20,9 @@ const accountInfoBtn = By.xpath("//a[@id='sites-sidebar-link-accountInfo']");
 const surveyResultsBtn = By.css("#sites-sidebar-link-surveyResults");
 const userBtn2 = By.css("#sites-sidebar-link-users");
 const siteProfileBtn2 = By.xpath("//a[@id='sites-sidebar-link-siteProfile']")
+const dropDownList = By.xpath("//div[@id='header-menu-accounts']");
+const pltwStaffDistrict = By.xpath("//span[normalize-space()='PLTW Staff District']");
+
 // Grants Selectors///////////////////////////////////////
 const grantsBtn = By.xpath("//a[@id='grants']//div[@class='modules__iconHolder___1VSXF']"); 
 const startAppBtn = By.xpath("//span[normalize-space()='Start an Application']");
@@ -88,7 +91,7 @@ const createAccountBtn = By.xpath("//span[normalize-space()='Create Educator Acc
 const createStudentBtn = By.xpath("//a[normalize-space()='Create Student Account']");
 const nickNameInput = By.xpath("//div[@class='MuiFormControl-root MuiTextField-root selfRegister__textInput___3ZbJT false']//input[@type='text']");
 const birthDateInput = By.xpath("//*[name()='path' and contains(@fill,'none')]");
-const birthDateChoice = By.xpath("//p[normalize-space()='7']");
+const birthDateChoice = By.xpath("//button[@class='MuiButtonBase-root MuiIconButton-root MuiPickersDay-day']//p[@class='MuiTypography-root MuiTypography-body2 MuiTypography-colorInherit'][normalize-space()='4']");
 const okBtn = By.xpath("//span[normalize-space()='OK']");
 const createParentEmailInput = By.xpath("//input[@type='email']");
 const nextBtn = By.xpath("//span[normalize-space()='Next']");
@@ -104,10 +107,37 @@ const summitLink = By.xpath("//b[normalize-space()='PLTW Summit']");
 // PD Selectorts/////
 const pdBtn = By.xpath("//div[@class='modules__paddingLeftPdIcon___2bvlJ']//*[name()='svg']");
 
+///My Profile Selectors//////////////
+const personIcon = By.xpath("//span[@class='header__spacer___1nTqq']");
+const myProfilelink = By.xpath("//li[@value='My Profile']//a");
+const contactUslink = By.xpath("//li[@value='Contact Us']//a");
+const adminArealink = By.xpath("//div[contains(text(),'Admin Area')]");
+const rosterHistorylink = By.xpath("//a[@href='/admin/roster-history']//div//*[name()='svg']");
+const backtoadminArealink = By.xpath("//span[normalize-space()='Admin Area']");
+const elevatedAccesslink = By.xpath("//*[name()='path' and contains(@d,'M5 4v2h14V')]");
+const logOutlink = By.xpath("//div[contains(text(),'Logout')]");
+
+//navigationLinks Selectors//////////////
+const coursesTab = By.xpath("//span[normalize-space()='Courses']");
+const professionaldevelopmentTab = By.xpath("//span[normalize-space()='Professional Development']");
+const storeTab = By.xpath("//span[normalize-space()='Store']");
+const communityTab = By.xpath("//span[normalize-space()='Community']");
+const helpTab = By.xpath("//span[normalize-space()='Help']");
+
+//programrecognitionTab Selectors///////////
+const programrecognitionTab = By.xpath("//span[normalize-space()='Program Recognition']");
+const pltwlaunchFilter = By.xpath("//span[normalize-space()='PLTW Launch']");
+const pltwgatewayFilter = By.xpath("//span[normalize-space()='PLTW Gateway']");
+const pltwhighschoolFilter = By.xpath("//span[normalize-space()='PLTW High School']");
+const pltwdistrictFilter = By.xpath("//span[normalize-space()='PLTW District']");
+const allprogramsFilter = By.xpath("//span[normalize-space()='All Programs']");
+const mypltwIcon = By.xpath("//div[@class='header__logo___3IpPZ']//*[name()='svg']");
+
 
 
 
 jest.setTimeout(200000);
+
 
 
 
@@ -117,15 +147,12 @@ describe('Regression tests for myPLTW QA site', () => {
         let driver = await new Builder().forBrowser("chrome").build();
         driver.manage().window().maximize();
         await driver.get('https://my-qa.pltw.org/login')
-        await driver.findElement(usernameInput).sendKeys("qa.taylor");
+        await driver.findElement(usernameInput).sendKeys("qasprintidli");
         await driver.findElement(submitBtn).click();
         await driver.wait(until.elementLocated(passwordInput), 30000);
-        await driver.findElement(passwordInput).sendKeys('Test123!');
+        await driver.findElement(passwordInput).sendKeys('Test@123');
         await driver.wait(until.elementLocated(signinBtn), 30000);
         await driver.findElement(signinBtn).click();
-        await driver.wait(until.elementLocated(h1), 30000);
-        let response = await driver.findElement(h1);
-        expect(response).toBeTruthy();
         await driver.quit();
     
    
@@ -137,10 +164,10 @@ describe('Regression tests for myPLTW QA site', () => {
         let driver = await new Builder().forBrowser("chrome").build();
         driver.manage().window().maximize();
         await driver.get('https://my-qa.pltw.org/login')
-        await driver.findElement(usernameInput).sendKeys("qa.taylor");
+        await driver.findElement(usernameInput).sendKeys("qasprintidli");
         await driver.findElement(submitBtn).click();
         await driver.wait(until.elementLocated(passwordInput), 30000);
-        await driver.findElement(passwordInput).sendKeys('Test123!');
+        await driver.findElement(passwordInput).sendKeys('Test@123');
         await driver.wait(until.elementLocated(signinBtn), 30000);
         await driver.findElement(signinBtn).click();
         await driver.wait(until.elementLocated(By.xpath("//span[@class='header__spacer___1nTqq']")), 30000);
@@ -155,12 +182,16 @@ describe('Regression tests for myPLTW QA site', () => {
         let driver = await new Builder().forBrowser("chrome").build();
         driver.manage().window().maximize();
         await driver.get('https://my-qa.pltw.org/login')
-        await driver.findElement(usernameInput).sendKeys("qa.taylor");
+        await driver.findElement(usernameInput).sendKeys("qasprintidli");
         await driver.findElement(submitBtn).click();
         await driver.wait(until.elementLocated(passwordInput), 30000);
-        await driver.findElement(passwordInput).sendKeys('Test123!');
+        await driver.findElement(passwordInput).sendKeys('Test@123');
         await driver.wait(until.elementLocated(signinBtn), 30000);
         await driver.findElement(signinBtn).click();
+        await driver.wait(until.elementLocated(dropDownList), 30000);
+        await driver.findElement(dropDownList).click();
+        await driver.wait(until.elementLocated(pltwStaffDistrict), 30000);
+        await driver.findElement(pltwStaffDistrict).click();
         await driver.wait(until.elementLocated(mySitesBtn), 30000);
         await driver.findElement(mySitesBtn).click();
         await driver.wait(until.elementLocated(ben_And_Kyle_Test_School), 30000);
@@ -199,10 +230,10 @@ describe('Regression tests for myPLTW QA site', () => {
         let driver = await new Builder().forBrowser("chrome").build();
         driver.manage().window().maximize();
         await driver.get('https://my-qa.pltw.org/login')
-        await driver.findElement(usernameInput).sendKeys("qa.taylor");
+        await driver.findElement(usernameInput).sendKeys("qasprintidli");
         await driver.findElement(submitBtn).click();
         await driver.wait(until.elementLocated(passwordInput), 30000);
-        await driver.findElement(passwordInput).sendKeys('Test123!');
+        await driver.findElement(passwordInput).sendKeys('Test@123');
         await driver.wait(until.elementLocated(signinBtn), 30000);
         await driver.findElement(signinBtn).click();
          await driver.wait(until.elementLocated(grantsBtn), 30000);
@@ -273,12 +304,16 @@ describe('Regression tests for myPLTW QA site', () => {
         let driver = await new Builder().forBrowser("chrome").build();
         driver.manage().window().maximize();
         await driver.get('https://my-qa.pltw.org/login')
-        await driver.findElement(usernameInput).sendKeys("qa.taylor");
+        await driver.findElement(usernameInput).sendKeys("qasprintidli");
         await driver.findElement(submitBtn).click();
         await driver.wait(until.elementLocated(passwordInput), 30000);
-        await driver.findElement(passwordInput).sendKeys('Test123!');
+        await driver.findElement(passwordInput).sendKeys('Test@123');
         await driver.wait(until.elementLocated(signinBtn), 30000);
         await driver.findElement(signinBtn).click();
+        await driver.wait(until.elementLocated(dropDownList), 30000);
+        await driver.findElement(dropDownList).click();
+        await driver.wait(until.elementLocated(pltwStaffDistrict), 30000);
+        await driver.findElement(pltwStaffDistrict).click();
         await driver.wait(until.elementLocated(mySitesBtn), 30000);
         await driver.findElement(mySitesBtn).click();
         await driver.wait(until.elementLocated(ben_And_Kyle_Test_School), 30000);
@@ -324,7 +359,9 @@ describe('Regression tests for myPLTW QA site', () => {
         await driver.findElement(nickNameInput).sendKeys("qa.student");
         await driver.wait(until.elementLocated(birthDateInput), 30000);
         await driver.findElement(birthDateInput).click();
+        await driver.wait(until.elementLocated(birthDateChoice), 30000);
         await driver.findElement(birthDateChoice).click();
+        await driver.wait(until.elementLocated(okBtn), 30000);
         await driver.findElement(okBtn).click();
         await driver.findElement(createParentEmailInput).sendKeys("tgreer@pltw.org");
         await driver.findElement(nextBtn).click();
@@ -341,10 +378,10 @@ describe('Regression tests for myPLTW QA site', () => {
         let driver = await new Builder().forBrowser("chrome").build();
         driver.manage().window().maximize();
         await driver.get('https://my-qa.pltw.org/login')
-        await driver.findElement(usernameInput).sendKeys("qa.taylor");
+        await driver.findElement(usernameInput).sendKeys("qasprintidli");
         await driver.findElement(submitBtn).click();
         await driver.wait(until.elementLocated(passwordInput), 30000);
-        await driver.findElement(passwordInput).sendKeys('Test123!');
+        await driver.findElement(passwordInput).sendKeys('Test@123');
         await driver.wait(until.elementLocated(signinBtn), 30000);
         await driver.findElement(signinBtn).click();
         await driver.wait(until.elementLocated(seeAllBtn), 30000);
@@ -365,10 +402,10 @@ describe('Regression tests for myPLTW QA site', () => {
         let driver = await new Builder().forBrowser("chrome").build();
         driver.manage().window().maximize();
         await driver.get('https://my-qa.pltw.org/login')
-        await driver.findElement(usernameInput).sendKeys("qa.taylor");
+        await driver.findElement(usernameInput).sendKeys("qasprintidli");
         await driver.findElement(submitBtn).click();
         await driver.wait(until.elementLocated(passwordInput), 30000);
-        await driver.findElement(passwordInput).sendKeys('Test123!');
+        await driver.findElement(passwordInput).sendKeys('Test@123');
         await driver.wait(until.elementLocated(signinBtn), 30000);
         await driver.findElement(signinBtn).click();
         await driver.wait(until.elementLocated(pdBtn), 30000);
@@ -380,7 +417,108 @@ describe('Regression tests for myPLTW QA site', () => {
     });
 
         
-           
+    test('myProfile', async () => {
+        let driver = await new Builder().forBrowser("chrome").build();
+        driver.manage().window().maximize();
+        await driver.get('https://my-qa.pltw.org/login')
+        await driver.findElement(usernameInput).sendKeys("qasprintidli");
+        await driver.findElement(submitBtn).click();
+        await driver.wait(until.elementLocated(passwordInput), 30000);
+        await driver.findElement(passwordInput).sendKeys('Test@123');
+        await driver.wait(until.elementLocated(signinBtn), 30000);
+        await driver.findElement(signinBtn).click();
+        await driver.sleep(3000);
+        await driver.wait(until.elementLocated(personIcon), 30000);
+        await driver.findElement(personIcon).click();
+        await driver.sleep(3000);
+        await driver.findElement(myProfilelink).click();
+        await driver.sleep(3000);
+        await driver.wait(until.elementLocated(personIcon), 30000);
+        await driver.findElement(personIcon).click();
+        await driver.sleep(3000);
+        await driver.findElement(contactUslink).click();
+        await driver.sleep(3000);
+        await driver.wait(until.elementLocated(personIcon), 30000);
+        await driver.findElement(personIcon).click();
+        await driver.wait(until.elementLocated(adminArealink), 30000);
+        await driver.findElement(adminArealink).click();
+        await driver.sleep(3000);
+        await driver.findElement(rosterHistorylink).click();
+        await driver.sleep(3000);
+        await driver.findElement(backtoadminArealink).click();
+        await driver.sleep(3000);
+        await driver.findElement(elevatedAccesslink).click();
+        await driver.sleep(30000);
+        await driver.findElement(backtoadminArealink).click();
+        await driver.sleep(30000);
+        await driver.wait(until.elementLocated(personIcon), 30000);
+        await driver.findElement(personIcon).click();
+        await driver.wait(until.elementLocated(logOutlink), 30000);
+        await driver.findElement(logOutlink).click();
+        await driver.quit();
+    });
+   
+    test('navigationLinks', async () => {
+        let driver = await new Builder().forBrowser("chrome").build();
+        driver.manage().window().maximize();
+        await driver.get('https://my-qa.pltw.org/login')
+        await driver.findElement(usernameInput).sendKeys("qasprintidli");
+        await driver.findElement(submitBtn).click();
+        await driver.wait(until.elementLocated(passwordInput), 30000);
+        await driver.findElement(passwordInput).sendKeys('Test@123');
+        await driver.wait(until.elementLocated(signinBtn), 30000);
+        await driver.findElement(signinBtn).click();
+        await driver.wait(until.elementLocated(coursesTab), 30000);
+        await driver.findElement(coursesTab).click();
+        const originalWindow = await driver.getWindowHandle();
+        await driver.switchTo().window(originalWindow);
+        await driver.sleep(5000);
+        await driver.findElement(professionaldevelopmentTab).click();
+        await driver.sleep(5000);
+        driver.navigate().back();
+        await driver.wait(until.elementLocated(storeTab), 30000);
+        await driver.findElement(storeTab).click();
+        await driver.sleep(5000);
+        driver.navigate().back();
+        await driver.sleep(5000);
+        await driver.findElement(communityTab).click();
+        await driver.sleep(5000);
+        driver.navigate().back();
+        await driver.sleep(5000);
+        await driver.findElement(helpTab).click();
+        await driver.sleep(5000);
+        await driver.switchTo().window(originalWindow);
+        await driver.sleep(5000);
+        await driver.quit();
+    });
+   
+    test('programrecognitionTab', async () => {
+        let driver = await new Builder().forBrowser("chrome").build();
+        driver.manage().window().maximize();
+        await driver.get('https://my-qa.pltw.org/login')
+        await driver.findElement(usernameInput).sendKeys("qasprintidli");
+        await driver.findElement(submitBtn).click();
+        await driver.wait(until.elementLocated(passwordInput), 30000);
+        await driver.findElement(passwordInput).sendKeys('Test@123');
+        await driver.wait(until.elementLocated(signinBtn), 30000);
+        await driver.findElement(signinBtn).click();
+        await driver.wait(until.elementLocated(coursesTab), 30000);
+        await driver.findElement(programrecognitionTab).click();
+        await driver.sleep(5000);
+        await driver.findElement(pltwlaunchFilter).click();
+        await driver.sleep(5000);
+        await driver.findElement(pltwgatewayFilter).click();
+        await driver.sleep(5000);
+        await driver.findElement(pltwhighschoolFilter).click();
+        await driver.sleep(5000);
+        await driver.findElement(pltwdistrictFilter).click();
+        await driver.sleep(5000);
+        await driver.findElement(allprogramsFilter).click();
+        await driver.sleep(5000);
+        await driver.findElement(mypltwIcon).click();
+        await driver.sleep(5000);
+        await driver.quit();    
+    });   
 
         
   
