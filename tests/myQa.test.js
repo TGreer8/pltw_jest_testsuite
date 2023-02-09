@@ -1,5 +1,6 @@
-const{Builder, By, Key, until, WebElement, Browser, ChromiumWebDriver, File, logging} = require("selenium-webdriver");
- 
+const{Builder, By, Key, until, WebElement, Browser, ChromiumWebDriver, File, logging, Actions} = require("selenium-webdriver");
+
+
 // Login Test Selectors//////////////////////////////////
 const usernameInput = By.xpath("//input[@id='idp-discovery-username']");
 const submitBtn = By.id("idp-discovery-submit");
@@ -25,12 +26,12 @@ const pltwStaffDistrict = By.xpath("//span[normalize-space()='PLTW Staff Distric
 
 // Grants Selectors///////////////////////////////////////
 const grantsBtn = By.xpath("//a[@id='grants']//div[@class='modules__iconHolder___1VSXF']"); 
-const startAppBtn = By.xpath("//span[normalize-space()='Start an Application']");
+const startAppBtn = By.xpath("(//button[normalize-space()='Start an Application'])[1]");
 const selectSiteInput = By.xpath("//div[@id='grants-grantsmodal-select-site']");
 const benAndKyleSchool = By.xpath("//li[normalize-space()='Ben and Kyle Test School']");
 const selectProgramInput = By.xpath("//div[@id='grants-grantsmodal-select-program']");
 const bioScience = By.xpath("//li[normalize-space()='PLTW Biomedical Science (9-12)']");
-const startAppBtn2 = By.xpath("//span[normalize-space()='Start Application']");
+const startAppBtn2 = By.xpath("(//button[normalize-space()='Start Application'])[1]");
 const primaryContactBtn = By.css("#grants-contactInfo-field-primaryContactSelf");
 const firstNameInput = By.xpath("//input[@id='grants-contactInfo-field-seondaryContactFirstName']");
 const lastNameInput = By.xpath("//input[@id='grants-contactInfo-field-seondaryContactLastName']");
@@ -40,10 +41,10 @@ const itProBtn = By.xpath("//li[normalize-space()='IT Professional']");
 const phoneInput = By.xpath("//input[@id='grants-contactInfo-field-seondaryContactPhone']");
 const heardAbout_Drop_Down = By.xpath("//div[@id='grants-contactInfo-field-heardAboutPLTW']");
 const existingPltwBtn = By.xpath("//li[normalize-space()='Existing PLTW School']");
-const saveAndContinueBtn = By.xpath("//div[@id='grants-application-footer']//span[@class='MuiButton-label'][normalize-space()='Save and Continue']");
+const saveAndContinueBtn = By.xpath("//div[@id='grants-application-footer']//button[@type='button'][normalize-space()='Save and Continue']");
 const orgType_Drop_Down = By.xpath("//div[@id='grants-orgProfile-field-orgType']");
 const publicSchoolBtn = By.xpath("//li[normalize-space()='Public School']");
-const trainingBtn = By.xpath("//input[@id='grants-orgProfile-check-training']");
+const trainingBtn = By.xpath("//div[@class='MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root grants-application__cardStyle___1r35- grants-application__multiColumn___2BW-6 css-12v74ge-MuiPaper-root-MuiCard-root']//div[1]//div[1]//label[1]//span[1]//input[1]");
 const gradeBtn = By.xpath("//input[@id='grants-orgProfile-check-grade11th']");
 const totalEnrollInput = By.xpath("//input[@id='grants-orgProfile-field-enrollment']");
 const americanIndian_AlaskanInput = By.xpath("//input[@id='grants-orgProfile-field-raceAmerIndianAlaskan']");
@@ -79,25 +80,25 @@ const createLastNameInput = By.xpath("//input[@id='registration-lastName']");
 const createPhoneNumberInput = By.xpath("//input[@id='registration-phone']");
 const createEmailInput = By.xpath("//input[@id='registration-email']");
 const stateDrop_Down = By.xpath("//div[@id='registration-state']");
-const gaBtn = By.xpath("//li[normalize-space()='GA']");
+const gaBtn = By.xpath("(//li[normalize-space()='GA'])[1]");
 const cityInput = By.xpath("//input[@id='registration-city']");
 const describeDrop_Down = By.xpath("//div[@id='registration-describeYou']");
 const teacherBtn = By.xpath("//li[normalize-space()='Teacher']");
 const skipBtn = By.xpath("//a[normalize-space()='Skip for Now']");
 const agreeBtn = By.xpath("//input[@id='registration-iAgree']"); 
-const createAccountBtn = By.xpath("//span[normalize-space()='Create Educator Account']");
+const createAccountBtn = By.xpath("//button[@id='registration-button-submit']");
 
 // Create Student Selectors /////////////////
 const createStudentBtn = By.xpath("//a[normalize-space()='Create Student Account']");
-const nickNameInput = By.xpath("//div[@class='MuiFormControl-root MuiTextField-root selfRegister__textInput___3ZbJT false']//input[@type='text']");
-const birthDateInput = By.xpath("//*[name()='path' and contains(@fill,'none')]");
-const birthDateChoice = By.xpath("//button[@class='MuiButtonBase-root MuiIconButton-root MuiPickersDay-day']//p[@class='MuiTypography-root MuiTypography-body2 MuiTypography-colorInherit'][normalize-space()='4']");
+const nickNameInput = By.xpath("//input[@id='mui-1']");
+const birthDateInput = By.xpath("(//*[name()='svg'][@class='MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1xr2tn8-MuiSvgIcon-root'])[1]");
+const birthDateChoice = By.css("button[aria-label='Feb 2, 2023']");
 const okBtn = By.xpath("//span[normalize-space()='OK']");
-const createParentEmailInput = By.xpath("//input[@type='email']");
-const nextBtn = By.xpath("//span[normalize-space()='Next']");
-const createStudentUsernameInput = By.xpath("//div[@class='MuiFormControl-root MuiTextField-root selfRegister__textInput___3ZbJT false false']//input[@type='text']");
+const createParentEmailInput = By.xpath("(//input[@id='mui-3'])[1]");
+const nextBtn = By.xpath("//button[normalize-space()='Next']");
+const createStudentUsernameInput = By.xpath("//input[@id='mui-4']");
 const createStudentPasswordInput = By.xpath("//input[@type='password']");
-const createStudentSubmitBtn = By.xpath("//span[normalize-space()='Submit']");
+const createStudentSubmitBtn = By.xpath("//button[normalize-space()='Submit']");
 
 // Announcment Selectors////
 const seeAllBtn = By.xpath("//a[normalize-space()='See All']");
@@ -113,7 +114,7 @@ const myProfilelink = By.xpath("//li[@value='My Profile']//a");
 const contactUslink = By.xpath("//li[@value='Contact Us']//a");
 const adminArealink = By.xpath("//div[contains(text(),'Admin Area')]");
 const rosterHistorylink = By.xpath("//a[@href='/admin/roster-history']//div//*[name()='svg']");
-const backtoadminArealink = By.xpath("//span[normalize-space()='Admin Area']");
+const backtoadminArealink = By.xpath("//button[normalize-space()='Admin Area']");
 const elevatedAccesslink = By.xpath("//*[name()='path' and contains(@d,'M5 4v2h14V')]");
 const logOutlink = By.xpath("//div[contains(text(),'Logout')]");
 
@@ -133,10 +134,15 @@ const pltwdistrictFilter = By.xpath("//span[normalize-space()='PLTW District']")
 const allprogramsFilter = By.xpath("//span[normalize-space()='All Programs']");
 const mypltwIcon = By.xpath("//div[@class='header__logo___3IpPZ']//*[name()='svg']");
 
+//cyberConsole Selctors//////
+const pltwHighSchool = By.xpath("//h3[normalize-space()='PLTW High School']");
+const cyberLabConsoleBtn = By.xpath("//a[@id='sites-site-sidebar-link-cyberManagement']");
+
+//CyberCalendar////
+const calendarDate = By.xpath("(//td[@class='MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Cell-cell css-1csev4g-MuiTableCell-root'])[28]");
 
 
-
-jest.setTimeout(200000);
+jest.setTimeout(100000);
 
 
 
@@ -241,6 +247,7 @@ describe('Regression tests for myPLTW QA site', () => {
         await driver.wait(until.elementLocated(startAppBtn), 30000);
         await driver.findElement(startAppBtn).click();
         await driver.findElement(selectSiteInput).click();
+        await driver.wait(until.elementLocated(benAndKyleSchool), 30000);
         await driver.findElement(benAndKyleSchool).click();
         await driver.findElement(selectProgramInput).click();
         await driver.findElement(bioScience).click();
@@ -338,6 +345,7 @@ describe('Regression tests for myPLTW QA site', () => {
         await driver.findElement(createPhoneNumberInput).sendKeys("555-555-5555");
         await driver.findElement(createEmailInput).sendKeys("tgreer@pltw.org");
         await driver.findElement(stateDrop_Down).click();
+        await driver.wait(until.elementLocated(gaBtn), 30000);
         await driver.findElement(gaBtn).click();
         await driver.findElement(cityInput).sendKeys("City");
         await driver.findElement(describeDrop_Down).click();
@@ -356,17 +364,17 @@ describe('Regression tests for myPLTW QA site', () => {
         driver.manage().window().maximize();
         await driver.get('https://my-qa.pltw.org/login')
         await driver.findElement(createStudentBtn).click();
-        await driver.findElement(nickNameInput).sendKeys("qa.student");
+        await driver.findElement(nickNameInput).sendKeys("qa.test");
         await driver.wait(until.elementLocated(birthDateInput), 30000);
         await driver.findElement(birthDateInput).click();
         await driver.wait(until.elementLocated(birthDateChoice), 30000);
         await driver.findElement(birthDateChoice).click();
-        await driver.wait(until.elementLocated(okBtn), 30000);
-        await driver.findElement(okBtn).click();
+       // await driver.wait(until.elementLocated(okBtn), 30000);
+        //await driver.findElement(okBtn).click();
         await driver.findElement(createParentEmailInput).sendKeys("tgreer@pltw.org");
         await driver.findElement(nextBtn).click();
         await driver.wait(until.elementLocated(createStudentUsernameInput), 30000);
-        await driver.findElement(createStudentUsernameInput).sendKeys("qa.student");
+        await driver.findElement(createStudentUsernameInput).sendKeys("qa.student123");
         await driver.findElement(createStudentPasswordInput).sendKeys('Test123!');
         await driver.findElement(createStudentSubmitBtn).click();
         expect(createStudentSubmitBtn).toBeTruthy();
@@ -522,6 +530,62 @@ describe('Regression tests for myPLTW QA site', () => {
 
         
   
+    test('cyberConsole', async () => {
+        let driver = await new Builder().forBrowser("chrome").build();
+        driver.manage().window().maximize();
+        await driver.get('https://my-qa.pltw.org/login')
+        await driver.findElement(usernameInput).sendKeys("qasprintidli");
+        await driver.findElement(submitBtn).click();
+        await driver.wait(until.elementLocated(passwordInput), 30000);
+        await driver.findElement(passwordInput).sendKeys('Test@123');
+        await driver.wait(until.elementLocated(signinBtn), 30000);
+        await driver.findElement(signinBtn).click();
+        await driver.wait(until.elementLocated(dropDownList), 30000);
+        await driver.findElement(dropDownList).click();
+        await driver.wait(until.elementLocated(pltwStaffDistrict), 30000);
+        await driver.findElement(pltwStaffDistrict).click();
+        await driver.wait(until.elementLocated(mySitesBtn), 30000);
+        await driver.findElement(mySitesBtn).click();
+        await driver.wait(until.elementLocated(pltwHighSchool), 30000);
+        await driver.findElement(pltwHighSchool).click();
+        await driver.wait(until.elementLocated(cyberLabConsoleBtn), 30000);
+        await driver.findElement(cyberLabConsoleBtn).click();
+        driver.quit();
+
+
+    });    
+
+    test('cyberCalendar', async () => {
+        
+        let driver = await new Builder().forBrowser("chrome").build();
+        driver.manage().window().maximize();
+        await driver.get('https://my-qa.pltw.org/login')
+        await driver.findElement(usernameInput).sendKeys("qasprintidli");
+        await driver.findElement(submitBtn).click();
+        await driver.wait(until.elementLocated(passwordInput), 30000);
+        await driver.findElement(passwordInput).sendKeys('Test@123');
+        await driver.wait(until.elementLocated(signinBtn), 30000);
+        await driver.findElement(signinBtn).click();
+        await driver.wait(until.elementLocated(mySitesBtn), 30000);
+        await driver.findElement(mySitesBtn).click();
+        await driver.wait(until.elementLocated(cyberLabConsoleBtn), 30000);
+        await driver.findElement(cyberLabConsoleBtn).click();
+        await driver.wait(until.elementLocated(calendarDate), 30000);
+        await driver.findElement(calendarDate);
+       
+        var targLink    = document.getElementById ("something");
+        var clickEvent  = document.createEvent ('MouseEvents');
+       clickEvent.initEvent ('dblclick', true, true);
+       targLink.dispatchEvent (clickEvent);
+       
+
+        
+       
+        
+        
+
+
+    });    
     
 
 
